@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="sildBut">
-        <attr name="slidBitmap" format="reference" />
-        <attr name="isOpen" format="boolean" />
+    <declare-styleable name="SlideButton">
+        <attr name="openBackground" format="reference"/>
+        <attr name="closeBackground" format="reference"/>
+        <attr name="slideImage" format="reference"/>
+        <attr name="isOpen" format="boolean"/>
     </declare-styleable>
 </resources>
