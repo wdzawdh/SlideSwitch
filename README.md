@@ -3,9 +3,6 @@
 ## 每天都要过得开心 ( ゜- ゜)つロ乾杯 ！
 
 
-## Demo
-> Demo地址 https://github.com/wdzawdh/SlideSwitch
-
 ### 效果图
 <img src="http://otjav6lvw.bkt.clouddn.com/17-7-23/80966843.jpg" width="400"/>
 
