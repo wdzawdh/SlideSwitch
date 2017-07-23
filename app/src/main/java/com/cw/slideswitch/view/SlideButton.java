@@ -194,7 +194,7 @@ public class SlideButton extends View {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        //处理事件冲突，﻿请求父容器不要拦截事件，然后直接交给onTouchEvent处理
+        //处理事件冲突，请求父容器不要拦截事件，然后直接交给onTouchEvent处理
         getParent().requestDisallowInterceptTouchEvent(true);
         return super.dispatchTouchEvent(event);
     }
