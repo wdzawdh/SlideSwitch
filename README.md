@@ -18,11 +18,10 @@
     app:isOpen="true"/>
 
 SlideButton sv_but = (SlideButton) findViewById(R.id.sv_but);
-sv_but.setOnSlideButtonChangeListener(
-                  new SlideButton.OnSlideButtonChangeListener() {
+sv_but.setOnSlideButtonChangeListener(new SlideButton.OnSlideButtonChangeListener() {
     @Override
     public void onButtonChange(SlideButton view, boolean isOpen) {
-
-    }
+        //监听开关状态
+    }
 });
 ```
