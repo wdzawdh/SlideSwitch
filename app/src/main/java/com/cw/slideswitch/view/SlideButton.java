@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.media.ThumbnailUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -116,6 +117,22 @@ public class SlideButton extends View {
         }
     }
 
+    public void setOpen(boolean isOpen) {
+        mIsOpen = isOpen;
+        post(new Runnable() {
+            @Override
+            public void run() {
+                if (mIsOpen) {
+                    mScroller.startScroll(mSlideLeft, 0, mMaxLeft - mSlideLeft, 0, 500);
+                } else {
+                    mScroller.startScroll(mSlideLeft, 0, -mSlideLeft, 0, 500);
+                }
+                setBackground(mIsOpen);
+                invalidate();
+            }
+        });
+    }
+
     private void init() {
         mOpenBitmap = BitmapFactory.decodeResource(getResources(), mOpenBackground);
         mCloseBitmap = BitmapFactory.decodeResource(getResources(), mCloseBackground);
@@ -126,15 +143,7 @@ public class SlideButton extends View {
         this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mIsOpen) {
-                    mScroller.startScroll(mSlideLeft, 0, -mSlideLeft, 0, 500);
-                    mIsOpen = false;
-                } else {
-                    mScroller.startScroll(mSlideLeft, 0, mMaxLeft - mSlideLeft, 0, 500);
-                    mIsOpen = true;
-                }
-                setBackground(mIsOpen);
-                invalidate();
+                setOpen(!mIsOpen);
                 if (listener != null) {
                     listener.onButtonChange(SlideButton.this, mIsOpen);
                 }
@@ -151,7 +160,7 @@ public class SlideButton extends View {
                 break;
             case MotionEvent.ACTION_MOVE:
                 int endX = (int) event.getX();
-                //x 手指坐标改变的大小，有正负
+                //x 手指坐标改变的大小，有正负
                 int diffX = endX - mStartX;
                 //记录每次移动的距离
                 mMoveX += diffX;
@@ -167,6 +176,7 @@ public class SlideButton extends View {
                 mStartX = endX;
                 break;
             case MotionEvent.ACTION_UP:
+                boolean isOpen = mIsOpen;
                 //移动距离大于2就进行处理
                 int moveX = Math.abs(this.mMoveX);
                 if (moveX > 2) {
@@ -180,7 +190,7 @@ public class SlideButton extends View {
                     }
                     setBackground(mIsOpen);
                     invalidate();
-                    if (listener != null) {
+                    if (listener != null && isOpen != mIsOpen) {
                         listener.onButtonChange(SlideButton.this, mIsOpen);
                     }
                     isOnClick = false;
@@ -218,7 +228,7 @@ public class SlideButton extends View {
         matrix.postScale(scale, scale);//x y 对应宽高缩小的比例，比如matrix.postScale(0.99f, 0.99f)
         mOpenBitmap = Bitmap.createBitmap(mOpenBitmap, 0, 0, mOpenBitmap.getWidth(), mOpenBitmap.getHeight(), matrix, false);
         mCloseBitmap = Bitmap.createBitmap(mCloseBitmap, 0, 0, mCloseBitmap.getWidth(), mCloseBitmap.getHeight(), matrix, false);
-        mSlideBitmap = Bitmap.createBitmap(mSlideBitmap, 0, 0, mSlideBitmap.getWidth(), mSlideBitmap.getHeight(), matrix, false);
+        mSlideBitmap = ThumbnailUtils.extractThumbnail(mSlideBitmap, mOpenBitmap.getHeight(), mOpenBitmap.getHeight());
         setBackground(mIsOpen);
 
         mMaxLeft = mBackground.getWidth() - mSlideBitmap.getWidth();
