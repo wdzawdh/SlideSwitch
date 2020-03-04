@@ -2,7 +2,7 @@
 
 
 ### 效果图
-<img src="http://otjav6lvw.bkt.clouddn.com/80966843.jpg" width="400"/>
+<img src="https://raw.githubusercontent.com/wdzawdh/SlideSwitch/master/image.jpg" width="400"/>
 
 ### 使用方法
 #### 有四个属性：打开情况的背景图、关闭情况下的背景图、滑块图、默认开关状态。都有默认值，默认就是金黄背景白色滑块。
